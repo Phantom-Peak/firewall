@@ -1,0 +1,170 @@
+/* ------- Reset / base ------- */
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; padding: 0; }
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+}
+
+:root { --sidebar-w: 260px; }
+
+/* ------- App layout ------- */
+.app {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  grid-template-rows: 60px 1fr;
+  grid-template-areas:
+    "top top"
+    "sidebar canvas";
+  height: 100vh;
+}
+
+.topbar {
+  grid-area: top;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+.topbar input {
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  min-width: 320px;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  border-right: 1px solid #e5e7eb;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: auto;
+}
+.sidebar h3 {
+  margin: 6px 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+.sidebar input {
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.palette {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+.palette-item {
+  user-select: none;
+  padding: 10px 12px;
+  border: 1px dashed #cbd5e1;
+  background: #f8fafc;
+  border-radius: 10px;
+  cursor: grab;
+  font-weight: 600;
+  text-align: center;
+}
+.zone-button {
+  margin-top: 6px;
+  padding: 10px 12px;
+  border: 1px solid #111827;
+  border-radius: 10px;
+  background: #111827;
+  color: white;
+  cursor: pointer;
+}
+
+.canvas { grid-area: canvas; position: relative; }
+.rf-wrapper { width: 100%; height: 100%; }
+
+/* ------- Nodes ------- */
+.node-device {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  min-width: 80px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0,0,0,.06);
+}
+
+/* device “type” accents (border color) */
+.node-nsp { border-color: #2563eb; }
+.node-pc  { border-color: #10b981; }
+.node-ne  { border-color: #9333ea; }
+.node-sys { border-color: #f59e0b; }
+
+/* Zone (parent) node — oval container */
+.node-zone {
+  border: 2px solid #0ea5e9;
+  background: #f0f9ff;
+  border-radius: 999px;     /* rounded/oval */
+  width: 280px;
+  height: 180px;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  padding-top: 8px;
+  font-weight: 700;
+
+  /* NEW: needed so perimeter handles can be placed absolutely */
+  position: relative;
+}
+
+/* Label pill on zone */
+.node-zone .label {
+  background: #0ea5e9;
+  color: white;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+/* ------- Edge visuals (optional for labels) ------- */
+.edge-firewall .react-flow__edge-text { font-weight: 800; }
+
+/* ------- NEW: Perimeter & device handles ------- */
+
+/* Small dots around the zone perimeter; React Flow <Handle> is absolute,
+   we just size and style it. */
+.zone-handle {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.28);
+  border: none;
+  box-shadow: none;
+  transform: translate(-50%, -50%);
+  cursor: crosshair;
+  opacity: .15;
+}
+.zone-handle:hover { opacity: .9; }
+
+/* When a zone is selected, show dots a bit stronger */
+.zone-selected .zone-handle { opacity: .45; }
+
+/* Standalone device handles (top/right/bottom/left) */
+.device-handle {
+  width: 8px;
+  height: 8px;
+}
+
+/* ------- (Optional) Buttons on topbar ------- */
+.topbar button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #111827;
+  background: #111827;
+  color: #fff;
+  cursor: pointer;
+}
+/* distinguish rings slightly (purely visual) */
+.zone-handle--src { background: rgba(0,0,0,.32); }
+.zone-handle--tgt { background: rgba(0,0,0,.20); }
