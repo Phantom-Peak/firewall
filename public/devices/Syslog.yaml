@@ -1,0 +1,4 @@
+- id: Syslog
+  label: Syslog
+  kind: Syslog
+  description: "Syslog Server"

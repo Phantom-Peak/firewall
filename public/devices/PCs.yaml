@@ -1,0 +1,4 @@
+- id: NSP
+  label: NSP
+  name: Network Service Point
+  description: "Handles network switching"
